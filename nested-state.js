@@ -1,4 +1,7 @@
 const redux = require("redux");
+/*Immer allows to modify properties inside an object
+and return the new object without modifying the
+original one */
 const produce = require("immer").produce;
 
 const initialState = {
@@ -22,6 +25,7 @@ const updateStreet = (street) => {
 const stateReducer = (state = initialState, action) => {
   switch (action.type) {
     case STREET_UPDATED:
+      //Immer applied
       return produce(state, (draft) => {
         draft.address.street = action.payload;
       });

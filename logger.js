@@ -1,4 +1,5 @@
 const redux = require("redux");
+//logger works like a console log with the previous and future state
 const logger = require("redux-logger").createLogger();
 const SHOES_ORDERED = "SHOES_ORDERED";
 const SHOES_RESTOCKED = "SHOES_RESTOCKED";
@@ -81,7 +82,9 @@ const rootReducer = redux.combineReducers({
 
 const store = redux.legacy_createStore(
   rootReducer,
-  //logger works like a console log with the previous and future state
+  /*The second argument is for applying middlewares,
+  the function has to be passed as an argumnt
+   to redux.applyMiddleware()*/
   redux.applyMiddleware(logger)
 );
 

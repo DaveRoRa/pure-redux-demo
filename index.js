@@ -5,6 +5,10 @@ const CAKE_RESTOCKED = "CAKE_RESTOCKED";
 const ICE_CREAM_ORDERED = "ICE_CREAM_ORDERED";
 const ICE_CREAM_RESTOCKED = "ICE_CREAM_RESTOCKED";
 
+/*Functions to return actions, it's better to use a function
+instead of just dispatching an action object directly so any
+change in the action structure just can be done in one place
+and to avoid typing errors*/
 function orderCake() {
   return { type: CAKE_ORDERED, payload: 1 };
 }
@@ -43,6 +47,7 @@ const initialIceCream = {
 const cakeReducer = (state = initialCake, action) => {
   switch (action.type) {
     case CAKE_ORDERED:
+      /*It has to return the state, not change it directly*/
       return {
         ...state,
         numOfCakes: state.numOfCakes - 1,
@@ -83,6 +88,9 @@ const store = redux.legacy_createStore(rootReducer);
 
 console.log("Initial State", store.getState());
 
+/*Execute callback function everytime a dispatch is triggered
+and return a function to unsubscribe, when executed the callback
+is not called anymore*/
 const unsuscribe = store.subscribe(() =>
   console.log("updated state", store.getState())
 );
@@ -92,6 +100,7 @@ store.dispatch(orderCake());
 store.dispatch(orderCake());
 store.dispatch(restockCake(4));
 
+//Bind actions to an object, not necessary
 const actions = redux.bindActionCreators(
   { orderCake, restockCake, orderIceCream, restockIceCream },
   store.dispatch
